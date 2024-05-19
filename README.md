@@ -1,2 +1,1 @@
-# competitive-programming-analytics-
-Competitive Programming Analytics 
+# Competitive Programming Analytics
