@@ -1,5 +1,6 @@
 import sys
 import numpy as np
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from dash import Dash, dcc, html
@@ -18,6 +19,8 @@ class Analytic:
     topicProblem = {}
     ratingProblem = {}
     modeSolvedProblem = {}
+
+    countContestByDivision = {}
 
     contestProblemByStatus = {}
     contestProblemByTag = {}
@@ -47,6 +50,10 @@ class Analytic:
             if contest.division not in self.divisionContest:
                 self.divisionContest[contest.division] = 0
             self.divisionContest[contest.division] += contest.solvedProblems
+
+            if contest.division not in self.countContestByDivision:
+                self.countContestByDivision[contest.division] = 0
+            self.countContestByDivision[contest.division] += 1
 
             if contest.division not in self.contestByDivision:
                 self.contestByDivision[contest.division] = []
@@ -142,6 +149,19 @@ class Analytic:
 
     ######## CONTESTS ########
 
+    def getCountContestByDivisionGraph(self):
+        labels = list(self.countContestByDivision.keys())
+        values = list(self.countContestByDivision.values())
+
+        df = pd.DataFrame(dict(count=values, category=labels))
+        color = utils.getRankColor(user.info.rank)
+
+        fig = px.line_polar(df, r='count', theta='category', line_close=True, template="ggplot2", color_discrete_sequence=[color], markers=True)
+        fig.update_traces(fill='toself', textposition='top center')
+        fig.update_layout(polar=dict(angularaxis=dict(showticklabels=True, ticks=''), radialaxis=dict(showticklabels=False, ticks='')), font=dict(color='black', size=20))
+
+        return fig
+
     def getStatusContestGraph(self):
         labels = list(self.statusContest.keys())
         values = list(self.statusContest.values())
@@ -169,7 +189,7 @@ class Analytic:
         chart = go.Pie(labels=labels, values=values, hole=.05, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Solved Problems By Division')
+        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Division Solved Problems')
         fig.update_traces(hoverinfo='label+percent', marker=dict(colors=colors, line=dict(color='#000000', width=1.5)))
 
         return fig
@@ -179,7 +199,9 @@ class Analytic:
         values = list(self.topicContest.values())
         parents = [''] * len(labels)
 
-        colors = ['gold', 'mediumturquoise', 'darkorange', 'lightgreen']
+        colors = []
+        for tag in self.topicContest:
+            colors.append(utils.getTagColor(tag))
 
         chart = go.Treemap(labels = labels, values = values, parents = parents, textinfo='value')
         fig = go.Figure(data=[chart])
@@ -241,7 +263,7 @@ class Analytic:
 
             chart = go.Bar(x=labels, y=values, name=status,  marker_color=utils.getVerdictColor(status), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='white', title_text='Statuses Progress')
+            fig.update_layout(plot_bgcolor='white', title_text='Statuses Problems Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -311,7 +333,7 @@ class Analytic:
 
             chart = go.Bar(x=labels, y=values, name=tag,  marker_color=utils.getTagColor(tag), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='white', title_text='Statuses Progress')
+            fig.update_layout(plot_bgcolor='white', title_text='Topic Solved Problems Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -344,8 +366,8 @@ class Analytic:
 
         chart = go.Bar(x=labels, y=values, marker=dict(cornerradius="30%"))
         fig = go.Figure(data=[chart])
-        fig.update_layout(plot_bgcolor='white', title_text='Statuses Progress')
-        fig.update_traces(marker=dict(color ='darkorange', line=dict(color='#000000', width=1)))
+        fig.update_layout(plot_bgcolor='white', title_text='Rating Earning Progress')
+        fig.update_traces(marker=dict(color ='gold', line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
 
@@ -364,7 +386,7 @@ class Analytic:
         chart = go.Pie(labels=labels, values=values, hole=.5, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Statuses Problems')
+        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Statuses')
         fig.update_traces(hoverinfo='label+percent', marker=dict(colors=colors, line=dict(color='#000000', width=1.5)))
 
         return fig
@@ -380,7 +402,7 @@ class Analytic:
         chart = go.Pie(labels=labels, values=values, hole=.05, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Solved Problem Mode')
+        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Solved Mode')
         fig.update_traces(hoverinfo='label+percent', marker=dict(colors=colors, line=dict(color='#000000', width=1.5)))
 
         return fig
@@ -390,17 +412,22 @@ class Analytic:
         values = list(self.topicProblem.values())
         parents = [''] * len(labels)
 
-        colors = ['gold', 'mediumturquoise', 'darkorange', 'lightgreen']
+        colors = []
+        for tag in self.topicProblem:
+            colors.append(utils.getTagColor(tag))
 
         chart = go.Treemap(labels = labels, values = values, parents = parents, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='middle center')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', showlegend=True, title_text='Topic Solved Problems')
+        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', showlegend=True, title_text='Topic Solved')
         fig.update_traces(hoverinfo='label', marker=dict(colors=colors, line=dict(color='#000000', width=1)))
 
         return fig
 
     def getRatingProblemGraph(self):
+        ratingColors = utils.getRatingColors()
+        colors = []
+
         keys = list(self.ratingProblem.keys())
         keys.sort()
         sortedRatingProblem = {i: self.ratingProblem[i] for i in keys}
@@ -408,12 +435,13 @@ class Analytic:
         labels = []
         for key in sortedRatingProblem.keys():
             labels.append("Rating " + str(key))
+            colors.append(ratingColors[key])
         values = list(sortedRatingProblem.values())
 
-        chart = go.Bar(x=labels, y=values, marker=dict(cornerradius="30%"))
+        chart = go.Bar(x=labels, y=values, marker_color=colors)
         fig = go.Figure(data=[chart])
-        fig.update_layout(plot_bgcolor='white', xaxis={'visible': False, 'showticklabels': False}, title_text='Solved By Rating')
-        fig.update_traces(marker=dict(color='gold', line=dict(color='#000000', width=1)))
+        fig.update_layout(plot_bgcolor='white', xaxis={'visible': False, 'showticklabels': False}, title_text='Rating Solved')
+        fig.update_traces(marker=dict(line=dict(color='#000000', width=1), cornerradius="30%"))
 
         return fig
 
@@ -517,7 +545,7 @@ class Analytic:
 
             chart = go.Bar(x=labels, y=values, name=tag,  marker_color=utils.getTagColor(tag), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='white', title_text='Statuses Progress')
+            fig.update_layout(plot_bgcolor='white', title_text='Topic Solved Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -525,6 +553,8 @@ class Analytic:
         return fig
 
     def getRatingProblemProgressGraph(self, yearFilter):
+        ratingColors = utils.getRatingColors()
+
         fig = go.Figure()
 
         for rating in self.problemByRating:
@@ -550,9 +580,9 @@ class Analytic:
 
             labels, values = self.getYearOrMonthFormat(sortedProblemsByKey, yearFilter)
 
-            chart = go.Bar(x=labels, y=values, name=rating,  marker_color=utils.getRatingColor(rating), marker=dict(cornerradius="30%"))
+            chart = go.Bar(x=labels, y=values, name=rating,  marker_color=ratingColors[rating], marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='white', title_text='Statuses Progress')
+            fig.update_layout(plot_bgcolor='white', title_text='Rating Solved Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -567,7 +597,19 @@ yearFilter = int(sys.argv[2])
 user = wrapper.getUser(handle, yearFilter)
 analytic = Analytic(user)
 
+# User
+handle = user.info.handle
+name = user.info.firstName + user.info.lastName
+maxRating = user.info.maxRating
+maxRank = utils.getRankName(user.info.maxRank)
+rating = user.info.rating
+rank = utils.getRankName(user.info.rank)
+colorMaxRank = utils.getRankColor(user.info.maxRank)
+colorRank = utils.getRankColor(user.info.rank)
+
 # Contests
+countContestByDivisionGraph = analytic.getCountContestByDivisionGraph()
+
 statusContestGraph = analytic.getStatusContestGraph()
 divisionContestGraph = analytic.getDivisionContestGraph()
 topicContestGraph = analytic.getTopicContestGraph()
@@ -589,7 +631,6 @@ solvedModeProblemProgressGraph = analytic.getSolvedModetProblemProgressGraph(yea
 tagProblemProgressGraph = analytic.getTagProblemProgressGraph(yearFilter)
 ratingProblemProgressGraph = analytic.getRatingProblemProgressGraph(yearFilter)
 
-
 app = Dash()
 
 app.layout = html.Div(children=[
@@ -597,6 +638,29 @@ app.layout = html.Div(children=[
         children='CODEFORCES ANALYTICS',
         style={'textAlign': 'center'}
     ),
+
+    html.Div(children=[
+        html.Div(children=[
+            html.Img(src=user.info.photo)
+        ]),
+
+        html.Div(children=[
+            html.H4(children='Handle     : {}'.format(handle)),
+            html.H4(children='Name       : {}'.format(name)),
+            html.H4(children='Max. Rating: {}'.format(maxRating)),
+            html.H4(children='Max. Rank  : {}'.format(maxRank))
+        ]),
+
+        html.Div(children=[
+            html.H3(children='{}'.format(rating)),
+            html.H3(children='{}'.format(rank))
+        ], style={'color': colorRank}),
+
+        html.Div(children=[
+            dcc.Graph(figure = countContestByDivisionGraph),
+        ])
+
+    ], style={'display': 'flex', 'flexDirection': 'row'}),
 
     html.Div(children=[
         html.Div(children=[

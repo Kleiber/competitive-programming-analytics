@@ -47,8 +47,9 @@ class Info:
     maxRating = 0
     rank = ""
     maxRank = ""
+    photo = ""
 
-    def __init__(self, handle, firstName, lastName, rating, maxRating, rank, maxRank):
+    def __init__(self, handle, firstName, lastName, rating, maxRating, rank, maxRank, photo):
         self.handle = handle
         self.firstName = firstName
         self.lastName = lastName
@@ -56,6 +57,7 @@ class Info:
         self.maxRating = maxRating
         self.rank = rank
         self.maxRank = maxRank
+        self.photo = photo
 
 # Complete information about the Codeforces user
 class User:
@@ -83,8 +85,9 @@ class User:
         maxRating = utils.getMapValue(user, 'maxRating', int)
         rank = utils.getMapValue(user, 'rank', int)
         maxRank = utils.getMapValue(user, 'maxRank', int)
+        titlePhoto = utils.getMapValue(user, 'titlePhoto', str)
 
-        self.info = Info(handle, firstName, lastName, rating, maxRating, rank, maxRank)
+        self.info = Info(handle, firstName, lastName, rating, maxRating, rank, maxRank, titlePhoto)
 
     def getUserProblems(self, handle, yearFilter):
         if self.info == None:
@@ -158,13 +161,13 @@ class User:
                     solvedProblems += 1
                     
             division = utils.getDivision(0)
-            if "Div. 1" in name:
+            if "div. 1" in name.lower():
                 division = utils.getDivision(1)
-            if "Div. 2" in name:
+            if "div. 2" in name.lower():
                 division = utils.getDivision(2)
-            if "Div. 3" in name:
+            if "div. 3" in name.lower():
                 division = utils.getDivision(3)
-            if "Div. 4" in name:
+            if "div. 4" in name.lower():
                 division = utils.getDivision(4)
 
             self.contests[id] = Contest(id, division, rating, solvedProblems, contestDate)
