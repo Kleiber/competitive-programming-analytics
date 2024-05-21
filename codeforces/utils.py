@@ -28,7 +28,7 @@ def getDivision(division):
 
 def getRankName(rank):
     if rank not in rankMapColor:
-        return 'Without Rating'
+        return 'Without Rank'
 
     rankChars = list(rank)
     for i in range(0, len(rankChars)):
@@ -54,9 +54,6 @@ def getVerdictColor(verdict):
 def getTagColor(tag):
     index = tagMapColor[tag]
     return colors[index]
-
-def getRatingColor(rating):
-    return 'darkorange'
 
 def getRatingColors():
     # rating 0 is the last color

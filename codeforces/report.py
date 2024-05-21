@@ -155,10 +155,10 @@ class Analytic:
         labels = list(self.countContestByDivision.keys())
         values = list(self.countContestByDivision.values())
 
-        df = pd.DataFrame(dict(count=values, category=labels))
+        df = pd.DataFrame(dict(participate=values, category=labels))
         color = utils.getRankColor(user.info.rank)
 
-        fig = px.line_polar(df, r='count', theta='category', line_close=True, template="ggplot2", color_discrete_sequence=[color], markers=True)
+        fig = px.line_polar(df, r='participate', theta='category', line_close=True, template="ggplot2", color_discrete_sequence=[color], markers=True)
         fig.update_traces(fill='toself', textposition='top center')
         fig.update_layout(polar=dict(angularaxis=dict(showticklabels=True, ticks=''), radialaxis=dict(showticklabels=False, ticks='')), font=dict(color='black', size=20))
 
@@ -188,7 +188,7 @@ class Analytic:
         for division in labels:
             colors.append(utils.getDivisionColor(division))
 
-        chart = go.Pie(labels=labels, values=values, hole=.05, textinfo='value')
+        chart = go.Pie(labels=labels, values=values, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
         fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Division Solved Problems')
@@ -401,7 +401,7 @@ class Analytic:
         for mode in labels:
             colors.append(utils.getSolvedTypeColor(mode))
 
-        chart = go.Pie(labels=labels, values=values, hole=.05, textinfo='value')
+        chart = go.Pie(labels=labels, values=values, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
         fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Solved Mode')
@@ -559,9 +559,13 @@ class Analytic:
 
         fig = go.Figure()
 
-        for rating in self.problemByRating:
+        problemByRatingKeys = list(self.problemByRating.keys())
+        problemByRatingKeys.sort()
+        problemByRatingSorted= {i: self.problemByRating[i] for i in problemByRatingKeys}
+
+        for rating in problemByRatingSorted:
             problemsByKey = {}
-            for problem in self.problemByRating[rating]:
+            for problem in problemByRatingSorted[rating]:
                 key = problem.submissionDate.year
                 if yearFilter != 0:
                     key =  problem.submissionDate.month
@@ -695,22 +699,22 @@ app.layout = html.Div(children=[
     html.Div(children=[
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=statusProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=statusProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=statusProblemProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=solvedTypeProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=solvedModeProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=solvedModeProblemProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=topicProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=tagProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=tagProblemProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=ratingProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=ratingProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=ratingProblemProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
         ], style={"padding": 0}),
 
     ]),
@@ -724,22 +728,22 @@ app.layout = html.Div(children=[
     html.Div(children=[
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=statusContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=statusContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=statusContestProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=divisionContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=divisionContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=divisionContestProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=ratingContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=ratingContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=ratingContestProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=topicContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=tagContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=tagContestProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
         ]),
 
     ]),
