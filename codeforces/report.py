@@ -715,7 +715,7 @@ app.layout = html.Div(children=[
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=ratingProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
             html.Div(children=dcc.Graph(figure=ratingProblemProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
-        ], style={"padding": 0}),
+        ]),
 
     ]),
 
