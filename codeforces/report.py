@@ -175,7 +175,7 @@ class Analytic:
         chart = go.Pie(labels=labels, values=values, hole=.5, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Statuses Problems')
+        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.80), title_text='Statuses Problems')
         fig.update_traces(hoverinfo='label+percent', marker=dict(colors=colors, line=dict(color='#000000', width=1.5)))
 
         return fig
@@ -191,7 +191,7 @@ class Analytic:
         chart = go.Pie(labels=labels, values=values, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Division Solved Problems')
+        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.80), title_text='Division Solved Problems')
         fig.update_traces(hoverinfo='label+percent', marker=dict(colors=colors, line=dict(color='#000000', width=1.5)))
 
         return fig
@@ -388,7 +388,7 @@ class Analytic:
         chart = go.Pie(labels=labels, values=values, hole=.5, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Statuses')
+        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.80), title_text='Statuses')
         fig.update_traces(hoverinfo='label+percent', marker=dict(colors=colors, line=dict(color='#000000', width=1.5)))
 
         return fig
@@ -404,7 +404,7 @@ class Analytic:
         chart = go.Pie(labels=labels, values=values, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Solved Mode')
+        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.80), title_text='Solved Mode')
         fig.update_traces(hoverinfo='label+percent', marker=dict(colors=colors, line=dict(color='#000000', width=1.5)))
 
         return fig
@@ -675,18 +675,18 @@ app.layout = html.Div(children=[
             html.H6(children='Registration: {}'.format(registrationDate.strftime("%x"))),
             html.H6(children='Online: {}'.format(lastOnlineDate.strftime("%x")))
 
-        ], style={'marginLeft':'3%', 'paddingTop':'2%'}),
+        ], style={'marginLeft':'1%'}),
 
         html.Div(children=[
             html.P(children=[html.B(children='{}'.format(rating))]),
             html.P(children=[html.B(children='{}'.format(rank))])
 
-        ], style={'color':colorRank, 'marginLeft':'8%', 'textAlign':'center', 'fontSize':'350%'}),
+        ], style={'color':colorRank, 'marginLeft':'10%', 'textAlign':'center', 'fontSize':'350%'}),
 
         html.Div(children=[
             dcc.Graph(figure = countContestByDivisionGraph),
 
-        ], style={'marginLeft':'5%','marginTop':'-3%'})
+        ], style={'marginLeft':'3%','marginTop':'-4%'})
 
     ], style={'display':'flex', 'marginBottom':'-3%'}),
 
