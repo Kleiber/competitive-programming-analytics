@@ -4,6 +4,8 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from dash import Dash, dcc, html
+import dash_bootstrap_components as dbc
+from dash_bootstrap_templates import load_figure_template
 
 import wrapper
 import utils
@@ -590,6 +592,7 @@ class Analytic:
         return fig
 
 # Main
+load_figure_template("BOOTSTRAP")
 
 handle = sys.argv[1]
 yearFilter = int(sys.argv[2])
@@ -597,15 +600,21 @@ yearFilter = int(sys.argv[2])
 user = wrapper.getUser(handle, yearFilter)
 analytic = Analytic(user)
 
+yearTitle = "ALL"
+if yearFilter != 0:
+    yearTitle = str(yearFilter)
+
 # User
 handle = user.info.handle
-name = user.info.firstName + user.info.lastName
+name = user.info.firstName + ' ' + user.info.lastName
 maxRating = user.info.maxRating
 maxRank = utils.getRankName(user.info.maxRank)
 rating = user.info.rating
 rank = utils.getRankName(user.info.rank)
 colorMaxRank = utils.getRankColor(user.info.maxRank)
 colorRank = utils.getRankColor(user.info.rank)
+registrationDate = user.info.registrationDate
+lastOnlineDate = user.info.lastOnlineDate
 
 # Contests
 countContestByDivisionGraph = analytic.getCountContestByDivisionGraph()
@@ -631,81 +640,108 @@ solvedModeProblemProgressGraph = analytic.getSolvedModetProblemProgressGraph(yea
 tagProblemProgressGraph = analytic.getTagProblemProgressGraph(yearFilter)
 ratingProblemProgressGraph = analytic.getRatingProblemProgressGraph(yearFilter)
 
-app = Dash()
+# App
+app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app.layout = html.Div(children=[
-    html.H1(
-        children='CODEFORCES ANALYTICS',
-        style={'textAlign': 'center'}
-    ),
+    # Title 
+    html.Div(children=[
+        html.H1(children='CODEFORCES ANALYTICS')
+    ], style={'textAlign': 'center'}),
 
+    # Title User Information
+    html.Div(children=[
+        html.H2(children='User Information:')
+    ], style={'textAlign': 'left', 'marginLeft':'2%'}),
+
+    html.Br(),
+
+    # User Information
     html.Div(children=[
         html.Div(children=[
             html.Img(src=user.info.photo)
-        ]),
+
+        ], style={'marginLeft':'3%'}),
 
         html.Div(children=[
-            html.H4(children='Handle     : {}'.format(handle)),
-            html.H4(children='Name       : {}'.format(name)),
-            html.H4(children='Max. Rating: {}'.format(maxRating)),
-            html.H4(children='Max. Rank  : {}'.format(maxRank))
-        ]),
+            html.H6(children='Handle: {}'.format(handle)),
+            html.H6(children='Name: {}'.format(name)),
+            html.H6(children='Max. Rating: {}'.format(maxRating)),
+            html.H6(children='Max. Rank: {}'.format(maxRank)),
+            html.H6(children='Registration: {}'.format(registrationDate.strftime("%x"))),
+            html.H6(children='Online: {}'.format(lastOnlineDate.strftime("%x")))
+
+        ], style={'marginLeft':'3%', 'paddingTop':'2%'}),
 
         html.Div(children=[
-            html.H3(children='{}'.format(rating)),
-            html.H3(children='{}'.format(rank))
-        ], style={'color': colorRank}),
+            html.P(children=[html.B(children='{}'.format(rating))]),
+            html.P(children=[html.B(children='{}'.format(rank))])
+
+        ], style={'color':colorRank, 'marginLeft':'8%', 'textAlign':'center', 'fontSize':'350%'}),
 
         html.Div(children=[
             dcc.Graph(figure = countContestByDivisionGraph),
-        ])
 
-    ], style={'display': 'flex', 'flexDirection': 'row'}),
+        ], style={'marginLeft':'5%','marginTop':'-3%'})
 
+    ], style={'display':'flex', 'marginBottom':'-3%'}),
+
+    # Title Problem Analytics
+    html.Div(children=[
+        html.H2(children='Problem Analytics [{}]'.format(yearTitle))
+    ], style={'textAlign': 'left', 'marginLeft':'2%'}),
+
+     # Problems
     html.Div(children=[
         html.Div(children=[
-            html.H2(
-                children='CONTESTS ANALISIS',
-                style={'textAlign': 'left'}
-            )
+            html.Div(children=dcc.Graph(figure=statusProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
+            html.Div(children=dcc.Graph(figure=statusProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
-            dcc.Graph(figure = statusContestGraph),
-            dcc.Graph(figure = divisionContestGraph),
-            dcc.Graph(figure = topicContestGraph),
-            dcc.Graph(figure = ratingContestGraph)
-        ], style={'display': 'flex', 'flexDirection': 'row'}),
+            html.Div(children=dcc.Graph(figure=solvedTypeProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
+            html.Div(children=dcc.Graph(figure=solvedModeProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+        ]),
 
         html.Div(children=[
-            dcc.Graph(figure = statusContestProgressGraph),
-            dcc.Graph(figure = divisionContestProgressGraph),
-            dcc.Graph(figure = tagContestProgressGraph),
-            dcc.Graph(figure = ratingContestProgressGraph)
-        ], style={'display': 'flex', 'flexDirection': 'row'})
+            html.Div(children=dcc.Graph(figure=topicProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
+            html.Div(children=dcc.Graph(figure=tagProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+        ]),
+
+        html.Div(children=[
+            html.Div(children=dcc.Graph(figure=ratingProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
+            html.Div(children=dcc.Graph(figure=ratingProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+        ], style={"padding": 0}),
+
     ]),
-    
+
+    # Title Contest Analytics
+    html.Div(children=[
+        html.H2(children='Contest Analytics [{}]'.format(yearTitle))
+    ], style={'textAlign': 'left', 'marginLeft':'2%'}),
+
+    # Contest
     html.Div(children=[
         html.Div(children=[
-            html.H2(
-                children='PROBLEMS ANALISIS',
-                style={'textAlign': 'left'}
-            )
+            html.Div(children=dcc.Graph(figure=statusContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
+            html.Div(children=dcc.Graph(figure=statusContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
-            dcc.Graph(figure = statusProblemGraph),
-            dcc.Graph(figure = solvedTypeProblemGraph),
-            dcc.Graph(figure = topicProblemGraph),
-            dcc.Graph(figure = ratingProblemGraph)
-        ], style={'display': 'flex', 'flexDirection': 'row'}),
+            html.Div(children=dcc.Graph(figure=divisionContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
+            html.Div(children=dcc.Graph(figure=divisionContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+        ]),
 
         html.Div(children=[
-            dcc.Graph(figure = statusProblemProgressGraph),
-            dcc.Graph(figure = solvedModeProblemProgressGraph),
-            dcc.Graph(figure = tagProblemProgressGraph),
-            dcc.Graph(figure = ratingProblemProgressGraph)
-        ], style={'display': 'flex', 'flexDirection': 'row'})
+            html.Div(children=dcc.Graph(figure=ratingContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
+            html.Div(children=dcc.Graph(figure=ratingContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+        ]),
+
+        html.Div(children=[
+            html.Div(children=dcc.Graph(figure=topicContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
+            html.Div(children=dcc.Graph(figure=tagContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
+        ]),
+
     ]),
 ])
 

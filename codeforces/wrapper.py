@@ -48,8 +48,10 @@ class Info:
     rank = ""
     maxRank = ""
     photo = ""
+    registrationDate = None
+    lastOnlineDate = None
 
-    def __init__(self, handle, firstName, lastName, rating, maxRating, rank, maxRank, photo):
+    def __init__(self, handle, firstName, lastName, rating, maxRating, rank, maxRank, photo, registrationDate, lastOnlineDate):
         self.handle = handle
         self.firstName = firstName
         self.lastName = lastName
@@ -58,6 +60,8 @@ class Info:
         self.rank = rank
         self.maxRank = maxRank
         self.photo = photo
+        self.registrationDate = registrationDate
+        self.lastOnlineDate = lastOnlineDate
 
 # Complete information about the Codeforces user
 class User:
@@ -86,8 +90,13 @@ class User:
         rank = utils.getMapValue(user, 'rank', int)
         maxRank = utils.getMapValue(user, 'maxRank', int)
         titlePhoto = utils.getMapValue(user, 'titlePhoto', str)
+        registrationDateSeconds= utils.getMapValue(user, 'registrationTimeSeconds', str)
+        lastOnlineDateSeconds = utils.getMapValue(user, 'lastOnlineTimeSeconds', str)
 
-        self.info = Info(handle, firstName, lastName, rating, maxRating, rank, maxRank, titlePhoto)
+        registrationDate = utils.getDate(registrationDateSeconds)
+        lastOnlineDate = utils.getDate(lastOnlineDateSeconds)
+
+        self.info = Info(handle, firstName, lastName, rating, maxRating, rank, maxRank, titlePhoto, registrationDate, lastOnlineDate)
 
     def getUserProblems(self, handle, yearFilter):
         if self.info == None:

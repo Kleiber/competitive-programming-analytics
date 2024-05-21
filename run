@@ -1,3 +1,11 @@
 #!/bin/bash
 
-python3 codeforces/report.py KleiberXD 0 
+if [[ ${#} == 1 ]]; then
+    python3 codeforces/report.py $1 0
+fi
+
+if [[ ${#} == 2 ]]; then
+    python3 codeforces/report.py $1 $2
+fi
+
+# python3 codeforces/report.py [handle] [year-optional]

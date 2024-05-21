@@ -27,8 +27,8 @@ def getDivision(division):
     return divisionMap[division]
 
 def getRankName(rank):
-   if rank == 0:
-    return 'Without Rating'
+    if rank not in rankMapColor:
+        return 'Without Rating'
 
     rankChars = list(rank)
     for i in range(0, len(rankChars)):
@@ -63,7 +63,7 @@ def getRatingColors():
     ratingMapColor = {0: colors[43]}
 
     index = 0
-    for rating in range(800, 3500, 100):
+    for rating in range(800, 3600, 100):
         ratingMapColor[rating] = colors[index]
         index += 1
     return ratingMapColor
