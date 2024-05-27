@@ -620,6 +620,7 @@ colorMaxRank = utils.getRankColor(user.info.maxRank)
 colorRank = utils.getRankColor(user.info.rank)
 registrationDate = user.info.registrationDate
 lastOnlineDate = user.info.lastOnlineDate
+photo = user.info.photo
 
 # Contests
 countContestByDivisionGraph = analytic.getCountContestByDivisionGraph()
@@ -657,7 +658,7 @@ app.layout = html.Div(children=[
 
     # Title User Information
     html.Div(children=[
-        html.H2(children='User Information:')
+        html.H2(children='User [{}]'.format(yearTitle))
     ], style={'textAlign': 'left', 'marginLeft':'2%'}),
 
     html.Br(),
@@ -665,9 +666,9 @@ app.layout = html.Div(children=[
     # User Information
     html.Div(children=[
         html.Div(children=[
-            html.Img(src=user.info.photo)
+            html.Img(src=photo, width=300, height=300)
 
-        ], style={'marginLeft':'3%'}),
+        ], style={'width':'15%', 'margin': 'auto'}),
 
         html.Div(children=[
             html.H6(children='Handle: {}'.format(handle)),
@@ -677,20 +678,20 @@ app.layout = html.Div(children=[
             html.H6(children='Registration: {}'.format(registrationDate.strftime("%x"))),
             html.H6(children='Online: {}'.format(lastOnlineDate.strftime("%x")))
 
-        ], style={'marginLeft':'1%'}),
+        ], style={'width':'15%', 'margin': 'auto'}),
 
         html.Div(children=[
             html.P(children=[html.B(children='{}'.format(rating))]),
             html.P(children=[html.B(children='{}'.format(rank))])
 
-        ], style={'color':colorRank, 'marginLeft':'10%', 'textAlign':'center', 'fontSize':'350%'}),
+        ], style={'color':colorRank, 'textAlign':'center', 'fontSize':'350%', 'width':'25%', 'margin': 'auto'}),
 
         html.Div(children=[
             dcc.Graph(figure = countContestByDivisionGraph),
 
-        ], style={'marginLeft':'3%','marginTop':'-4%'})
+        ], style={'width':'30%', 'margin': 'auto'})
 
-    ], style={'display':'flex', 'marginBottom':'-3%'}),
+    ], style={'display':'flex', 'marginLeft':'2%', 'marginTop':'-4%'}),
 
     # Title Problem Analytics
     html.Div(children=[
