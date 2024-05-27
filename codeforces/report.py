@@ -160,7 +160,7 @@ class Analytic:
 
         fig = px.line_polar(df, r='participate', theta='category', line_close=True, template="ggplot2", color_discrete_sequence=[color], markers=True)
         fig.update_traces(fill='toself', textposition='top center')
-        fig.update_layout(polar=dict(angularaxis=dict(showticklabels=True, ticks=''), radialaxis=dict(showticklabels=False, ticks='')), font=dict(color='black', size=20))
+        fig.update_layout(paper_bgcolor='#222222', polar=dict(bgcolor='#222222', angularaxis=dict(showticklabels=True, ticks=''), radialaxis=dict(showticklabels=False, ticks='')), font=dict(color='white', size=20))
 
         return fig
 
@@ -230,7 +230,7 @@ class Analytic:
 
         chart = go.Bar(x=labels, y=values, marker=dict(cornerradius="30%"))
         fig = go.Figure(data=[chart])
-        fig.update_layout(plot_bgcolor='white', xaxis={'visible': False, 'showticklabels': False}, title_text='Rating Earning')
+        fig.update_layout(plot_bgcolor='#303030', xaxis={'visible': False, 'showticklabels': False}, title_text='Rating Earning')
         fig.update_traces(marker=dict(color='gold', line=dict(color='#000000', width=1)))
 
         return fig
@@ -265,7 +265,7 @@ class Analytic:
 
             chart = go.Bar(x=labels, y=values, name=status,  marker_color=utils.getVerdictColor(status), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='white', title_text='Statuses Problems Progress')
+            fig.update_layout(plot_bgcolor='#303030', title_text='Statuses Problems Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -300,7 +300,7 @@ class Analytic:
 
             chart = go.Bar(x=labels, y=values, name=division,  marker_color=utils.getDivisionColor(division), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='white', title_text='Division Solved Problems Progress')
+            fig.update_layout(plot_bgcolor='#303030', title_text='Division Solved Problems Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -335,7 +335,7 @@ class Analytic:
 
             chart = go.Bar(x=labels, y=values, name=tag,  marker_color=utils.getTagColor(tag), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='white', title_text='Topic Solved Problems Progress')
+            fig.update_layout(plot_bgcolor='#303030', title_text='Topic Solved Problems Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -368,7 +368,7 @@ class Analytic:
 
         chart = go.Bar(x=labels, y=values, marker=dict(cornerradius="30%"))
         fig = go.Figure(data=[chart])
-        fig.update_layout(plot_bgcolor='white', title_text='Rating Earning Progress')
+        fig.update_layout(plot_bgcolor='#303030', title_text='Rating Earning Progress')
         fig.update_traces(marker=dict(color ='gold', line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -442,7 +442,7 @@ class Analytic:
 
         chart = go.Bar(x=labels, y=values, marker_color=colors)
         fig = go.Figure(data=[chart])
-        fig.update_layout(plot_bgcolor='white', xaxis={'visible': False, 'showticklabels': False}, title_text='Rating Solved')
+        fig.update_layout(plot_bgcolor='#303030', xaxis={'visible': False, 'showticklabels': False}, title_text='Rating Solved')
         fig.update_traces(marker=dict(line=dict(color='#000000', width=1), cornerradius="30%"))
 
         return fig
@@ -477,7 +477,7 @@ class Analytic:
 
             chart = go.Bar(x=labels, y=values, name=status,  marker_color=utils.getVerdictColor(status), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='white', title_text='Statuses Progress')
+            fig.update_layout(plot_bgcolor='#303030', title_text='Statuses Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -512,7 +512,7 @@ class Analytic:
 
             chart = go.Bar(x=labels, y=values, name=mode,  marker_color=utils.getSolvedTypeColor(mode), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='white', title_text='Solved Mode Progress')
+            fig.update_layout(plot_bgcolor='#303030', title_text='Solved Mode Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -547,7 +547,7 @@ class Analytic:
 
             chart = go.Bar(x=labels, y=values, name=tag,  marker_color=utils.getTagColor(tag), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='white', title_text='Topic Solved Progress')
+            fig.update_layout(plot_bgcolor='#303030', title_text='Topic Solved Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -588,7 +588,7 @@ class Analytic:
 
             chart = go.Bar(x=labels, y=values, name=rating,  marker_color=ratingColors[rating], marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='white', title_text='Rating Solved Progress')
+            fig.update_layout(plot_bgcolor='#303030', title_text='Rating Solved Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        
@@ -596,7 +596,8 @@ class Analytic:
         return fig
 
 # Main
-load_figure_template("BOOTSTRAP")
+# load_figure_template("BOOTSTRAP")
+load_figure_template("DARKLY")
 
 handle = sys.argv[1]
 yearFilter = int(sys.argv[2])
@@ -645,7 +646,8 @@ tagProblemProgressGraph = analytic.getTagProblemProgressGraph(yearFilter)
 ratingProblemProgressGraph = analytic.getRatingProblemProgressGraph(yearFilter)
 
 # App
-app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+# app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(external_stylesheets=[dbc.themes.DARKLY])
 
 app.layout = html.Div(children=[
     # Title 
@@ -699,25 +701,25 @@ app.layout = html.Div(children=[
     html.Div(children=[
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=statusProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=statusProblemProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=statusProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=solvedTypeProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=solvedModeProblemProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=solvedModeProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=topicProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=tagProblemProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=tagProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=ratingProblemGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=ratingProblemProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=ratingProblemProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
         ]),
 
-    ]),
+    ], style={'marginLeft': '2%'}),
 
     # Title Contest Analytics
     html.Div(children=[
@@ -728,25 +730,25 @@ app.layout = html.Div(children=[
     html.Div(children=[
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=statusContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=statusContestProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=statusContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=divisionContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=divisionContestProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=divisionContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=ratingContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=ratingContestProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=ratingContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
         ]),
 
         html.Div(children=[
             html.Div(children=dcc.Graph(figure=topicContestGraph, style={'width': '40vw'}), style={'display':'inline-block'}),
-            html.Div(children=dcc.Graph(figure=tagContestProgressGraph, style={'width': '53.5vw'}), style={'display':'inline-block'})
+            html.Div(children=dcc.Graph(figure=tagContestProgressGraph, style={'width': '55vw'}), style={'display':'inline-block'})
         ]),
 
-    ]),
+    ], style={'marginLeft': '2%'}),
 ])
 
 if __name__ == '__main__':
