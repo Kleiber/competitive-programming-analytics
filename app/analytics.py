@@ -1,5 +1,4 @@
 import sys
-import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -149,7 +148,7 @@ class Analytics:
         labels = list(self.countContestByDivision.keys())
         values = list(self.countContestByDivision.values())
 
-        df = pd.DataFrame(dict(participate=values, category=labels))
+        df = dict(participate=values, category=labels)
         color = utils.getRankColor(self.user.info.rank)
 
         fig = px.line_polar(df, r='participate', theta='category', line_close=True, template="ggplot2", color_discrete_sequence=[color], markers=True)
