@@ -24,7 +24,7 @@ class Contest:
 
 # User information
 class Info:
-    def __init__(self, handle, firstName, lastName, rating, maxRating, rank, maxRank, photo, registrationDate, lastOnlineDate):
+    def __init__(self, handle, firstName, lastName, rating, maxRating, rank, maxRank, photo, country, city, organization, registrationDate, lastOnlineDate):
         self.handle = handle
         self.firstName = firstName
         self.lastName = lastName
@@ -33,6 +33,9 @@ class Info:
         self.rank = rank
         self.maxRank = maxRank
         self.photo = photo
+        self.country = country
+        self.city = city
+        self.organization = organization
         self.registrationDate = registrationDate
         self.lastOnlineDate = lastOnlineDate
 
@@ -64,13 +67,16 @@ class User:
         rank = utils.getMapValue(user, 'rank', int)
         maxRank = utils.getMapValue(user, 'maxRank', int)
         titlePhoto = utils.getMapValue(user, 'titlePhoto', str)
+        country = utils.getMapValue(user, 'country', str)
+        city = utils.getMapValue(user, 'city', str)
+        organization = utils.getMapValue(user, 'organization', str)
         registrationDateSeconds= utils.getMapValue(user, 'registrationTimeSeconds', str)
         lastOnlineDateSeconds = utils.getMapValue(user, 'lastOnlineTimeSeconds', str)
 
         registrationDate = utils.getDate(registrationDateSeconds)
         lastOnlineDate = utils.getDate(lastOnlineDateSeconds)
 
-        self.info = Info(handle, firstName, lastName, rating, maxRating, rank, maxRank, titlePhoto, registrationDate, lastOnlineDate)
+        self.info = Info(handle, firstName, lastName, rating, maxRating, rank, maxRank, titlePhoto, country, city, organization, registrationDate, lastOnlineDate)
 
     def getUserProblems(self, handle, year):
         if self.info == None:

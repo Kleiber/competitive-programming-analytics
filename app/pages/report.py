@@ -1,5 +1,6 @@
 import dash
 from dash import html, dcc
+import dash_bootstrap_components as dbc
 
 import analytics
 import wrapper
@@ -11,8 +12,10 @@ def layout(handle=None, year=None, **kwargs):
     user = wrapper.User(handle, year)
 
     if user.info == None:
+        message = user.message.split(':')[1]
+
         return html.Div(children=[
-            html.H1(children=user.message, style={'margin':'auto'})
+            dbc.Alert(message, color="light", style={'margin':'auto', 'fontSize':'300%'}),
         ], style = {'display':'flex', 'marginTop': '10%'}),
 
     dashboard = analytics.Analytics(user)
@@ -24,6 +27,9 @@ def layout(handle=None, year=None, **kwargs):
     # User
     handle = user.info.handle
     name = user.info.firstName + ' ' + user.info.lastName
+    organization = user.info.organization
+    country = user.info.country
+    city = user.info.city
     maxRating = user.info.maxRating
     maxRank = utils.getRankName(user.info.maxRank)
     rating = user.info.rating
@@ -77,6 +83,9 @@ def layout(handle=None, year=None, **kwargs):
             html.Div(children=[
                 html.H6(children='Handle: {}'.format(handle)),
                 html.H6(children='Name: {}'.format(name)),
+                html.H6(children='Country: {}'.format(country)),
+                html.H6(children='City: {}'.format(city)),
+                html.H6(children='Organization: {}'.format(organization)),
                 html.H6(children='Max. Rating: {}'.format(maxRating)),
                 html.H6(children='Max. Rank: {}'.format(maxRank)),
                 html.H6(children='Registration: {}'.format(registrationDate.strftime("%x"))),

@@ -13,13 +13,17 @@ app.layout = html.Div([
     ], style={'textAlign': 'center'}),
 
     html.Div(children=[
-        html.H4('Handle:', style={'margin':'auto'}),
-        dcc.Input(id='handleInput', type='text', value='', style={'margin':'auto'}),
-        html.H4('Year:', style={'margin':'auto'}),
-        dcc.Input(id='yearInput', type='number', value=2024, style={'margin':'auto'}),
+        dbc.InputGroup([dbc.InputGroupText("Handle"),
+            dbc.Input(id='handleInput', type='search', value='', placeholder="Codeforces Handle", style={'margin':'auto'}),
+        ], size="lg"),
+
+        dbc.InputGroup([dbc.InputGroupText("Year"),
+            dbc.Input(id='yearInput', type='number', value=0, placeholder="Year", style={'margin':'auto'}),
+        ], size="lg"),
+
         dbc.Button('Submit', id='submitButton', n_clicks=0, outline=True, color='light', className='me-1')
 
-    ], style={'display':'flex', 'marginLeft':'33%', 'marginRight':'33%', 'marginTop':'2%'}),
+    ], style={'display':'flex', 'marginLeft':'30%', 'marginRight':'30%', 'marginTop':'2%', 'class':"container-fluid"}),
 
     dcc.Location(id='appLocation', refresh="callback-nav"),
 
