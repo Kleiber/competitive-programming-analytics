@@ -1,5 +1,6 @@
 requests
 plotly
 dash
+pandas
 dash_bootstrap_components
 dash_bootstrap_templates
