@@ -2,16 +2,6 @@ import utils
 
 # Problems that the user solves
 class Problem:
-    id = ""
-    contestId = ""
-    letter = ""
-    verdict = ""
-    solvedType = ""
-    rating = 0
-    tags = []
-    programmingLanguage = ""
-    submissionDate = None
-
     def __init__(self, id, contestId, letter, verdict, solvedType, rating, tags, programmingLanguage, submissionDate):
         self.id = id
         self.contestId = contestId
@@ -25,12 +15,6 @@ class Problem:
 
 # Contests that the user participated
 class Contest:
-    id = ""
-    division = ""
-    rating = 0
-    solvedProblems = 0
-    date = None
-
     def __init__(self, id, division, rating, solvedProblems, date):
         self.id = id
         self.division = division
@@ -40,17 +24,6 @@ class Contest:
 
 # User information
 class Info:
-    handle = ""
-    firstName = ""
-    lastName = ""
-    rating = 0
-    maxRating = 0
-    rank = ""
-    maxRank = ""
-    photo = ""
-    registrationDate = None
-    lastOnlineDate = None
-
     def __init__(self, handle, firstName, lastName, rating, maxRating, rank, maxRank, photo, registrationDate, lastOnlineDate):
         self.handle = handle
         self.firstName = firstName
@@ -65,21 +38,22 @@ class Info:
 
 # Complete information about the Codeforces user
 class User:
-    info = None
-    contests = {}
-    problems = {}
+    def __init__(self, handle, year):
+        self.info = None
+        self.message = None
+        self.contests = {}
+        self.problems = {}
 
-    def __init__(self, handle, yearFilter):
         self.getUserInfo(handle)
-        self.getUserProblems(handle, yearFilter)
-        self.getUserContests(handle, yearFilter)
+        self.getUserProblems(handle, year)
+        self.getUserContests(handle, year)
 
     def getUserInfo(self, handle):
         link = f"https://codeforces.com/api/user.info?handles={handle}"
         data = utils.getDataFromRequest(link)
 
         if data['status'] != "OK":
-            print("Error occurred: {}".format(data['comment']))
+            self.message = data['comment']
             return
 
         user = data['result'][0]
@@ -98,7 +72,7 @@ class User:
 
         self.info = Info(handle, firstName, lastName, rating, maxRating, rank, maxRank, titlePhoto, registrationDate, lastOnlineDate)
 
-    def getUserProblems(self, handle, yearFilter):
+    def getUserProblems(self, handle, year):
         if self.info == None:
             return
 
@@ -106,12 +80,12 @@ class User:
         data = utils.getDataFromRequest(link)
 
         if data['status'] != "OK":
-            print("Error occurred: {}".format(data['comment']))
+            self.message = data['comment']
             return
 
         visited = {}
-        submissions = data['result']
-        for submission in submissions:
+        result = data['result']
+        for submission in result:
             problem = submission['problem']
             verdict = submission['verdict']
             author = submission['author']
@@ -128,47 +102,48 @@ class User:
             id = problemsetName + str(contestId) + index
             submissionDate = utils.getDate(creationTimeSeconds)
 
-            if yearFilter != submissionDate.year and yearFilter != 0:
+            if int(year) != submissionDate.year and int(year) != 0:
                 continue
 
             if id in visited:
-                if verdict == "OK": 
+                if verdict == "OK":
                     self.problems[id] = Problem(id, contestId, index, verdict, participantType, rating, tags, programmingLanguage, submissionDate)
             else:
                 visited[id] = True
                 self.problems[id] = Problem(id, contestId, index, verdict, participantType, rating, tags, programmingLanguage, submissionDate)
 
-    def getUserContests(self, handle, yearFilter):
+
+    def getUserContests(self, handle, year):
         if self.info == None:
             return
         if not self.problems:
             return
 
         link = f"https://codeforces.com/api/user.rating?handle={handle}"
-        dataContest = utils.getDataFromRequest(link)
+        data = utils.getDataFromRequest(link)
 
-        if dataContest['status'] != "OK":
-            print("Error occurred: {}".format(dataContest['comment']))
+        if data['status'] != "OK":
+            self.message = data['comment']
             return
-        
-        contests = dataContest['result']
-        for contest in contests:
+
+        result = data['result']
+        for contest in result:
             id = contest['contestId']
             name = contest['contestName']
             oldRating = contest['oldRating']
             newRating = contest['newRating']
             contestDate = utils.getDate(contest['ratingUpdateTimeSeconds'])
 
-            if yearFilter != contestDate.year and yearFilter != 0:
+            if int(year) != contestDate.year and int(year) != 0:
                 continue
 
             rating = newRating - oldRating
-    
+
             solvedProblems = 0
             for key in self.problems:
                 if self.problems[key].contestId == id and self.problems[key].solvedType == "CONTESTANT" and self.problems[key].verdict == "OK":
                     solvedProblems += 1
-                    
+
             division = utils.getDivision(0)
             if "div. 1" in name.lower():
                 division = utils.getDivision(1)
@@ -180,8 +155,3 @@ class User:
                 division = utils.getDivision(4)
 
             self.contests[id] = Contest(id, division, rating, solvedProblems, contestDate)
-
-def getUser(handle, yearFilter):
-    print('Load data from Codeforces for \'{}\' user...'.format(handle))
-    user = User(handle, yearFilter)
-    return user

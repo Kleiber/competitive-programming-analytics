@@ -9,9 +9,5 @@ First we need to install the requirements
 Command to run server
 
 ```bash
-    run [handle] [year-optional]
-
-    # Example
-    run Kleiber
-    run Kleiber 2023
+    run
 ```
