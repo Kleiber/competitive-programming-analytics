@@ -1,9 +1,8 @@
 # Competitive Programming Analytics (CPA)
 
-Competitive Programming Analytics (CPA) is a tool to help with competitive programming development.
-
 ## Overview
-`cpa` is a command line that aims to help competitive programmers optimizing code compilation, testing, and debugging time.
+
+Competitive Programming Analytics (CPA) is a tool to help with competitive programming development.
 
 ## Installing
 
@@ -34,3 +33,13 @@ export PATH=$PATH:$HOME/cpa:
 ```
 
 Finally, restart your terminal or run the command `source ~/.zshrc`
+
+## Run
+
+To start the server simply run the following command in a terminal tab
+
+```bash
+cpa
+```
+
+Then open the following link in the browser http://127.0.0.1:8050/
