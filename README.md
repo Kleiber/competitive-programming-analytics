@@ -12,7 +12,7 @@ Using `cpa` command line is simple. First, clone the repository in your workspac
 cd $HOME
 git clone https://github.com/Kleiber/cpa.git
 cd cpa
-pyhton3 install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ### Linux
