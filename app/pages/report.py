@@ -10,7 +10,7 @@ import utils
 dash.register_page(__name__, path_template="/report/<handle>/<year>")
 
 def layout(handle=None, year=None, **kwargs):
-    load_figure_template("DARKLY")
+    load_figure_template("CYBORG")
 
     user = wrapper.User(handle, year)
 

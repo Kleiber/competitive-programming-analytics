@@ -153,7 +153,7 @@ class Analytics:
 
         fig = px.line_polar(df, r='participate', theta='category', line_close=True, template="ggplot2", color_discrete_sequence=[color], markers=True)
         fig.update_traces(fill='toself', textposition='top center')
-        fig.update_layout(paper_bgcolor='#222222', polar=dict(bgcolor='#222222', angularaxis=dict(showticklabels=True, ticks=''), radialaxis=dict(showticklabels=False, ticks='')), font=dict(color='white', size=20))
+        fig.update_layout(paper_bgcolor='#060606', polar=dict(bgcolor='#060606', angularaxis=dict(showticklabels=True, ticks=''), radialaxis=dict(showticklabels=False, ticks='')), font=dict(color='white', size=20))
 
         return fig
 
@@ -168,7 +168,7 @@ class Analytics:
         chart = go.Pie(labels=labels, values=values, hole=.5, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.75), title_text='Statuses Problems')
+        fig.update_layout(template='plotly_dark', uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.75), title_text='Statuses Problems')
         fig.update_traces(hoverinfo='label+percent', marker=dict(colors=colors, line=dict(color='#000000', width=1.5)))
 
         return fig
@@ -184,7 +184,7 @@ class Analytics:
         chart = go.Pie(labels=labels, values=values, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.75), title_text='Division Solved Problems')
+        fig.update_layout(template='plotly_dark', uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.75), title_text='Division Solved Problems')
         fig.update_traces(hoverinfo='label+percent', marker=dict(colors=colors, line=dict(color='#000000', width=1.5)))
 
         return fig
@@ -201,7 +201,7 @@ class Analytics:
         chart = go.Treemap(labels = labels, values = values, parents = parents, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='middle center')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', title_text='Topic Solved Problems')
+        fig.update_layout(template='plotly_dark', uniformtext_minsize=25, uniformtext_mode='hide', title_text='Topic Solved Problems')
         fig.update_traces(hoverinfo='label', marker=dict(colors=colors, line=dict(color='#000000', width=1)))
 
         return fig
@@ -223,7 +223,7 @@ class Analytics:
 
         chart = go.Bar(x=labels, y=values, marker=dict(cornerradius="30%"))
         fig = go.Figure(data=[chart])
-        fig.update_layout(plot_bgcolor='#303030', xaxis={'visible': False, 'showticklabels': False}, title_text='Rating Earning')
+        fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', xaxis={'visible': False, 'showticklabels': False}, title_text='Rating Earning')
         fig.update_traces(marker=dict(color='gold', line=dict(color='#000000', width=1)))
 
         return fig
@@ -258,7 +258,7 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=status,  marker_color=utils.getVerdictColor(status), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='#303030', title_text='Statuses Problems Progress')
+            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Statuses Problems Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)
@@ -293,7 +293,7 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=division,  marker_color=utils.getDivisionColor(division), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='#303030', title_text='Division Solved Problems Progress')
+            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Division Solved Problems Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)
@@ -328,7 +328,7 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=tag,  marker_color=utils.getTagColor(tag), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='#303030', title_text='Topic Solved Problems Progress')
+            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Topic Solved Problems Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)
@@ -361,7 +361,7 @@ class Analytics:
 
         chart = go.Bar(x=labels, y=values, marker=dict(cornerradius="30%"))
         fig = go.Figure(data=[chart])
-        fig.update_layout(plot_bgcolor='#303030', title_text='Rating Earning Progress')
+        fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Rating Earning Progress')
         fig.update_traces(marker=dict(color ='gold', line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)
@@ -381,7 +381,7 @@ class Analytics:
         chart = go.Pie(labels=labels, values=values, hole=.5, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.75), title_text='Statuses')
+        fig.update_layout(template='plotly_dark', uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.75), title_text='Statuses')
         fig.update_traces(hoverinfo='label+percent', marker=dict(colors=colors, line=dict(color='#000000', width=1.5)))
 
         return fig
@@ -397,7 +397,7 @@ class Analytics:
         chart = go.Pie(labels=labels, values=values, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='inside')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.75), title_text='Solved Mode')
+        fig.update_layout(template='plotly_dark', uniformtext_minsize=25, uniformtext_mode='hide', legend=dict(yanchor="top",y=0.99,xanchor="left",x=0.75), title_text='Solved Mode')
         fig.update_traces(hoverinfo='label+percent', marker=dict(colors=colors, line=dict(color='#000000', width=1.5)))
 
         return fig
@@ -414,7 +414,7 @@ class Analytics:
         chart = go.Treemap(labels = labels, values = values, parents = parents, textinfo='value')
         fig = go.Figure(data=[chart])
         fig.update_traces(textposition='middle center')
-        fig.update_layout(uniformtext_minsize=25, uniformtext_mode='hide', showlegend=True, title_text='Topic Solved')
+        fig.update_layout(template='plotly_dark', uniformtext_minsize=25, uniformtext_mode='hide', showlegend=True, title_text='Topic Solved')
         fig.update_traces(hoverinfo='label', marker=dict(colors=colors, line=dict(color='#000000', width=1)))
 
         return fig
@@ -435,7 +435,7 @@ class Analytics:
 
         chart = go.Bar(x=labels, y=values, marker_color=colors)
         fig = go.Figure(data=[chart])
-        fig.update_layout(plot_bgcolor='#303030', xaxis={'visible': False, 'showticklabels': False}, title_text='Rating Solved')
+        fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', xaxis={'visible': False, 'showticklabels': False}, title_text='Rating Solved')
         fig.update_traces(marker=dict(line=dict(color='#000000', width=1), cornerradius="30%"))
 
         return fig
@@ -470,7 +470,7 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=status,  marker_color=utils.getVerdictColor(status), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='#303030', title_text='Statuses Progress')
+            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Statuses Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)
@@ -505,7 +505,7 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=mode,  marker_color=utils.getSolvedTypeColor(mode), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='#303030', title_text='Solved Mode Progress')
+            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Solved Mode Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)
@@ -540,7 +540,7 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=tag,  marker_color=utils.getTagColor(tag), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='#303030', title_text='Topic Solved Progress')
+            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Topic Solved Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)
@@ -581,7 +581,7 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=rating,  marker_color=ratingColors[rating], marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(plot_bgcolor='#303030', title_text='Rating Solved Progress')
+            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Rating Solved Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
         fig.update_layout(barmode='group', xaxis_tickangle=-45)        

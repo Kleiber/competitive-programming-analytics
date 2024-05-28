@@ -2,12 +2,12 @@ import dash
 from dash import Dash, dcc, html, Input, Output, State, callback
 import dash_bootstrap_components as dbc
 
-app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.DARKLY])
+app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.CYBORG])
 
 app.layout = html.Div([
     html.Div(children=[
         html.H1(children='CODEFORCES ANALYTICS')
-    ], style={'textAlign': 'center'}),
+    ], style={'textAlign': 'center', 'marginTop':'2%'}),
 
     html.Div(children=[
         dbc.InputGroup([dbc.InputGroupText("Handle"),
@@ -18,9 +18,9 @@ app.layout = html.Div([
             dbc.Input(id='yearInput', type='number', value=0, placeholder="Year", style={'margin':'auto'}),
         ], size="lg"),
 
-        dbc.Button('Submit', id='submitButton', n_clicks=0, outline=True, color='light', className='me-1')
+        dbc.Button('Generate', id='submitButton', n_clicks=0, color='secondary', className='me-1')
 
-    ], style={'display':'flex', 'marginLeft':'30%', 'marginRight':'30%', 'marginTop':'2%', 'class':"container-fluid"}),
+    ], style={'display':'flex', 'marginLeft':'30%', 'marginRight':'30%', 'marginTop':'2%', 'marginBottom':'2%', 'class':"container-fluid"}),
 
     dcc.Location(id='appLocation', refresh="callback-nav"),
 
