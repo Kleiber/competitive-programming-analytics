@@ -1,11 +1,8 @@
 import dash
 from dash import Dash, dcc, html, Input, Output, State, callback
 import dash_bootstrap_components as dbc
-from dash_bootstrap_templates import load_figure_template
 
 app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.DARKLY])
-
-load_figure_template("DARKLY")
 
 app.layout = html.Div([
     html.Div(children=[
