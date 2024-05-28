@@ -12,6 +12,7 @@ dash.register_page(__name__, path_template="/report/<handle>/<year>")
 def layout(handle=None, year=None, **kwargs):
     load_figure_template("CYBORG")
 
+    year = int(year)
     user = wrapper.User(handle, year)
 
     if user.info == None:
@@ -24,7 +25,7 @@ def layout(handle=None, year=None, **kwargs):
     dashboard = analytics.Analytics(user)
 
     yearTitle = "ALL"
-    if int(year) != 0:
+    if year != 0:
         yearTitle = str(year)
 
     # User

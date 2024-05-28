@@ -47,11 +47,19 @@ class User:
         self.contests = {}
         self.problems = {}
 
-        self.getUserInfo(handle)
+        self.getUserInfo(handle, year)
         self.getUserProblems(handle, year)
         self.getUserContests(handle, year)
 
-    def getUserInfo(self, handle):
+    def getUserInfo(self, handle, year):
+        if len(handle) == 0:
+            self.message = "Error: Enter a Codeforces handle"
+            return
+
+        if year < 2010 and year != 0:
+            self.message = "Error: Data for year {} not found".format(year)
+            return
+
         link = f"https://codeforces.com/api/user.info?handles={handle}"
         data = utils.getDataFromRequest(link)
 
@@ -79,7 +87,12 @@ class User:
         self.info = Info(handle, firstName, lastName, rating, maxRating, rank, maxRank, titlePhoto, country, city, organization, registrationDate, lastOnlineDate)
 
     def getUserProblems(self, handle, year):
-        if self.info == None:
+        if len(handle) == 0:
+            self.message = "Error: Enter a Codeforces handle"
+            return
+
+        if year < 2010 and year != 0:
+            self.message = "Error: Data for year {} not found".format(year)
             return
 
         link = f"https://codeforces.com/api/user.status?handle={handle}"
@@ -108,7 +121,7 @@ class User:
             id = problemsetName + str(contestId) + index
             submissionDate = utils.getDate(creationTimeSeconds)
 
-            if int(year) != submissionDate.year and int(year) != 0:
+            if year != submissionDate.year and year != 0:
                 continue
 
             if id in visited:
@@ -120,9 +133,12 @@ class User:
 
 
     def getUserContests(self, handle, year):
-        if self.info == None:
+        if len(handle) == 0:
+            self.message = "Error: Enter a Codeforces handle"
             return
-        if not self.problems:
+
+        if year < 2010 and year != 0:
+            self.message = "Error: Data for year {} not found".format(year)
             return
 
         link = f"https://codeforces.com/api/user.rating?handle={handle}"
@@ -140,7 +156,7 @@ class User:
             newRating = contest['newRating']
             contestDate = utils.getDate(contest['ratingUpdateTimeSeconds'])
 
-            if int(year) != contestDate.year and int(year) != 0:
+            if year != contestDate.year and year != 0:
                 continue
 
             rating = newRating - oldRating

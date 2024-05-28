@@ -3,9 +3,13 @@ import requests
 from datetime import datetime
 
 def getDataFromRequest(link):
-    url = requests.get(link)
-    data = json.loads(url.text)
-    return data
+    try:
+        url = requests.get(link)
+        data = json.loads(url.text)
+        return data
+    except:
+        data = dict(comment='Error: Internet disconnected!', status='ERR_INTERNET')
+        return data
 
 def getMapValue(map, key, classinfo):
     if key in map:
