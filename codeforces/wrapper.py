@@ -2,16 +2,6 @@ import utils
 
 # Problems that the user solves
 class Problem:
-    id = ""
-    contestId = ""
-    letter = ""
-    verdict = ""
-    solvedType = ""
-    rating = 0
-    tags = []
-    programmingLanguage = ""
-    submissionDate = None
-
     def __init__(self, id, contestId, letter, verdict, solvedType, rating, tags, programmingLanguage, submissionDate):
         self.id = id
         self.contestId = contestId
@@ -25,12 +15,6 @@ class Problem:
 
 # Contests that the user participated
 class Contest:
-    id = ""
-    division = ""
-    rating = 0
-    solvedProblems = 0
-    date = None
-
     def __init__(self, id, division, rating, solvedProblems, date):
         self.id = id
         self.division = division
@@ -40,18 +24,7 @@ class Contest:
 
 # User information
 class Info:
-    handle = ""
-    firstName = ""
-    lastName = ""
-    rating = 0
-    maxRating = 0
-    rank = ""
-    maxRank = ""
-    photo = ""
-    registrationDate = None
-    lastOnlineDate = None
-
-    def __init__(self, handle, firstName, lastName, rating, maxRating, rank, maxRank, photo, registrationDate, lastOnlineDate):
+    def __init__(self, handle, firstName, lastName, rating, maxRating, rank, maxRank, photo, country, city, organization, registrationDate, lastOnlineDate):
         self.handle = handle
         self.firstName = firstName
         self.lastName = lastName
@@ -60,16 +33,19 @@ class Info:
         self.rank = rank
         self.maxRank = maxRank
         self.photo = photo
+        self.country = country
+        self.city = city
+        self.organization = organization
         self.registrationDate = registrationDate
         self.lastOnlineDate = lastOnlineDate
 
 # Complete information about the Codeforces user
 class User:
-    info = None
-    contests = {}
-    problems = {}
-
     def __init__(self, handle, yearFilter):
+        self.info = None
+        self.contests = {}
+        self.problems = {}
+
         self.getUserInfo(handle)
         self.getUserProblems(handle, yearFilter)
         self.getUserContests(handle, yearFilter)
@@ -90,13 +66,16 @@ class User:
         rank = utils.getMapValue(user, 'rank', int)
         maxRank = utils.getMapValue(user, 'maxRank', int)
         titlePhoto = utils.getMapValue(user, 'titlePhoto', str)
+        country = utils.getMapValue(user, 'country', str)
+        city = utils.getMapValue(user, 'city', str)
+        organization = utils.getMapValue(user, 'organization', str)
         registrationDateSeconds= utils.getMapValue(user, 'registrationTimeSeconds', str)
         lastOnlineDateSeconds = utils.getMapValue(user, 'lastOnlineTimeSeconds', str)
 
         registrationDate = utils.getDate(registrationDateSeconds)
         lastOnlineDate = utils.getDate(lastOnlineDateSeconds)
 
-        self.info = Info(handle, firstName, lastName, rating, maxRating, rank, maxRank, titlePhoto, registrationDate, lastOnlineDate)
+        self.info = Info(handle, firstName, lastName, rating, maxRating, rank, maxRank, titlePhoto, country, city, organization, registrationDate, lastOnlineDate)
 
     def getUserProblems(self, handle, yearFilter):
         if self.info == None:

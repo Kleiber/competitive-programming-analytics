@@ -1,6 +1,5 @@
 import sys
 import numpy as np
-import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from dash import Dash, dcc, html
@@ -11,35 +10,33 @@ import wrapper
 import utils
 
 class Analytic:
-    user = {}
-
-    statusContest = {}
-    topicContest = {}
-    divisionContest = {}
-
-    statusProblem = {}
-    topicProblem = {}
-    ratingProblem = {}
-    modeSolvedProblem = {}
-
-    countContestByDivision = {}
-
-    contestProblemByStatus = {}
-    contestProblemByTag = {}
-    contestByDivision = {}
-    contestMonthRating = {}
-
-    problemByStatus = {}
-    problemByTag = {}
-    problemByMode = {}
-    problemByRating = {}
-
-    minMonthSubmission = 2030
-    maxMonthSubmission = 0
-    minYearSubmission = 2030
-    maxYearSubmission = 0
-
     def __init__(self, user):
+        self.statusContest = {}
+        self.topicContest = {}
+        self.divisionContest = {}
+
+        self.statusProblem = {}
+        self.topicProblem = {}
+        self.ratingProblem = {}
+        self.modeSolvedProblem = {}
+
+        self.countContestByDivision = {}
+
+        self.contestProblemByStatus = {}
+        self.contestProblemByTag = {}
+        self.contestByDivision = {}
+        self.contestMonthRating = {}
+
+        self.problemByStatus = {}
+        self.problemByTag = {}
+        self.problemByMode = {}
+        self.problemByRating = {}
+
+        self.minMonthSubmission = 2030
+        self.maxMonthSubmission = 0
+        self.minYearSubmission = 2030
+        self.maxYearSubmission = 0
+
         self.user = user
         self.Initialization()
 
@@ -155,8 +152,8 @@ class Analytic:
         labels = list(self.countContestByDivision.keys())
         values = list(self.countContestByDivision.values())
 
-        df = pd.DataFrame(dict(participate=values, category=labels))
-        color = utils.getRankColor(user.info.rank)
+        df = dict(participate=values, category=labels)
+        color = utils.getRankColor(self.user.info.rank)
 
         fig = px.line_polar(df, r='participate', theta='category', line_close=True, template="ggplot2", color_discrete_sequence=[color], markers=True)
         fig.update_traces(fill='toself', textposition='top center')
@@ -621,6 +618,9 @@ colorRank = utils.getRankColor(user.info.rank)
 registrationDate = user.info.registrationDate
 lastOnlineDate = user.info.lastOnlineDate
 photo = user.info.photo
+organization = user.info.organization
+country = user.info.country
+city = user.info.city
 
 # Contests
 countContestByDivisionGraph = analytic.getCountContestByDivisionGraph()
@@ -673,6 +673,9 @@ app.layout = html.Div(children=[
         html.Div(children=[
             html.H6(children='Handle: {}'.format(handle)),
             html.H6(children='Name: {}'.format(name)),
+            html.H6(children='Country: {}'.format(country)),
+            html.H6(children='City: {}'.format(city)),
+            html.H6(children='Organization: {}'.format(organization)),
             html.H6(children='Max. Rating: {}'.format(maxRating)),
             html.H6(children='Max. Rank: {}'.format(maxRank)),
             html.H6(children='Registration: {}'.format(registrationDate.strftime("%x"))),
