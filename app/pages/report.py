@@ -12,7 +12,19 @@ dash.register_page(__name__, path_template="/report/<handle>/<year>")
 def layout(handle=None, year=None, **kwargs):
     load_figure_template("CYBORG")
 
-    year = int(year)
+    if year == None:
+        year = 0
+    else:
+        year = int(year)
+
+    if handle == None:
+        handle = ''
+
+    yearTitle = "ALL"
+    if year != 0:
+        yearTitle = str(year)
+
+    # Retrieve user information
     user = wrapper.User(handle, year)
 
     if user.info == None:
@@ -22,11 +34,8 @@ def layout(handle=None, year=None, **kwargs):
             dbc.Alert(message, color="light", style={'margin':'auto', 'fontSize':'300%'}),
         ], style = {'display':'flex', 'marginTop': '10%'}),
 
+    # Build graphics for analitycs
     dashboard = analytics.Analytics(user)
-
-    yearTitle = "ALL"
-    if year != 0:
-        yearTitle = str(year)
 
     # User
     handle = user.info.handle
