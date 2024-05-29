@@ -258,10 +258,10 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=status,  marker_color=utils.getVerdictColor(status), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Statuses Problems Progress')
+            fig.update_layout(plot_bgcolor='#111111', title_text='Statuses Problems Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
-        fig.update_layout(barmode='group', xaxis_tickangle=-45)
+        fig.update_layout(template='plotly_dark', barmode='group', xaxis_tickangle=-45)
 
         return fig
 
@@ -293,10 +293,10 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=division,  marker_color=utils.getDivisionColor(division), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Division Solved Problems Progress')
+            fig.update_layout(plot_bgcolor='#111111', title_text='Division Solved Problems Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
-        fig.update_layout(barmode='group', xaxis_tickangle=-45)
+        fig.update_layout(template='plotly_dark', barmode='group', xaxis_tickangle=-45)
 
         return fig
 
@@ -328,10 +328,10 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=tag,  marker_color=utils.getTagColor(tag), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Topic Solved Problems Progress')
+            fig.update_layout(plot_bgcolor='#111111', title_text='Topic Solved Problems Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
-        fig.update_layout(barmode='group', xaxis_tickangle=-45)
+        fig.update_layout(template='plotly_dark', barmode='group', xaxis_tickangle=-45)
 
         return fig
 
@@ -361,10 +361,10 @@ class Analytics:
 
         chart = go.Bar(x=labels, y=values, marker=dict(cornerradius="30%"))
         fig = go.Figure(data=[chart])
-        fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Rating Earning Progress')
+        fig.update_layout(plot_bgcolor='#111111', title_text='Rating Earning Progress')
         fig.update_traces(marker=dict(color ='gold', line=dict(color='#000000', width=1)))
 
-        fig.update_layout(barmode='group', xaxis_tickangle=-45)
+        fig.update_layout(template='plotly_dark', barmode='group', xaxis_tickangle=-45)
 
         return fig
 
@@ -470,10 +470,10 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=status,  marker_color=utils.getVerdictColor(status), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Statuses Progress')
+            fig.update_layout(plot_bgcolor='#111111', title_text='Statuses Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
-        fig.update_layout(barmode='group', xaxis_tickangle=-45)
+        fig.update_layout(template='plotly_dark', barmode='group', xaxis_tickangle=-45)
 
         return fig
 
@@ -505,10 +505,10 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=mode,  marker_color=utils.getSolvedTypeColor(mode), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Solved Mode Progress')
+            fig.update_layout(plot_bgcolor='#111111', title_text='Solved Mode Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
-        fig.update_layout(barmode='group', xaxis_tickangle=-45)
+        fig.update_layout(template='plotly_dark', barmode='group', xaxis_tickangle=-45)
 
         return fig
 
@@ -540,10 +540,10 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=tag,  marker_color=utils.getTagColor(tag), marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Topic Solved Progress')
+            fig.update_layout(plot_bgcolor='#111111', title_text='Topic Solved Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
-        fig.update_layout(barmode='group', xaxis_tickangle=-45)
+        fig.update_layout(template='plotly_dark', barmode='group', xaxis_tickangle=-45)
 
         return fig
 
@@ -581,9 +581,9 @@ class Analytics:
 
             chart = go.Bar(x=labels, y=values, name=rating,  marker_color=ratingColors[rating], marker=dict(cornerradius="30%"))
             fig.add_trace(chart)
-            fig.update_layout(template='plotly_dark', plot_bgcolor='#111111', title_text='Rating Solved Progress')
+            fig.update_layout(plot_bgcolor='#111111', title_text='Rating Solved Progress')
             fig.update_traces(marker=dict(line=dict(color='#000000', width=1)))
 
-        fig.update_layout(barmode='group', xaxis_tickangle=-45)        
+        fig.update_layout(template='plotly_dark', barmode='group', xaxis_tickangle=-45)
 
         return fig
