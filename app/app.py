@@ -37,4 +37,5 @@ def update_output(n_clicks, handle, year):
     return '/report/{}/{}'.format(handle, year)
 
 if __name__ == '__main__':
-    app.run(debug=True, use_reloader=False)
+    app.run(host='0.0.0.0', port='8080', debug=False, use_reloader=False)
+    #app.run(debug=True, use_reloader=False)
