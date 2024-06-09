@@ -34,8 +34,10 @@ app.layout = html.Div([
     State('yearInput', 'value')
 )
 def update_output(n_clicks, handle, year):
+    print("Generating report for handle \"{}\" and \"{}\" year.".format(handle, year))
+
     return '/report/{}/{}'.format(handle, year)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='8080', debug=False, use_reloader=False)
+    app.run(host='0.0.0.0', port='8050')
     #app.run(debug=True, use_reloader=False)
